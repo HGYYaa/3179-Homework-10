@@ -1,0 +1,49 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "COVID-19 Death Cases",
+    "width": 800,
+    "height": 400,
+    "data": {
+      "url": "https://raw.githubusercontent.com/HGYYaa/3179HW9/main/js/us-10m.json",
+      "format": {"type": "topojson", "feature": "counties"}
+    },
+    "layer": [
+      {
+        "transform": [
+          {
+            "calculate": "'Data is not available in ' + datum.state",
+            "as": "note"
+          }
+        ],
+        "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"},
+        "encoding": {"tooltip": {"field": "note"}}
+      },
+      {
+        "transform": [
+          {
+            "lookup": "id",
+            "from": {
+              "data": {
+                "url": "https://raw.githubusercontent.com/HGYYaa/3179HW10/main/data/us_county_sociohealth_data.csv"
+              },
+              "key": "fips",
+              "fields": ["num_deaths"]
+            }
+          }
+        ],
+        "projection": {"type": "albersUsa"},
+        "mark": "geoshape",
+        "encoding": {
+          "color": {
+            "field": "num_deaths",
+            "type": "quantitative",
+            "scale": {"type": "log"}
+          },
+          "tooltip": [
+            {"field": "id", "type": "nominal", "title": "State ID"},
+            {"field": "num_deaths", "type": "quantitative", "title": "Death Cases"}
+          ]
+        }
+      }
+    ]
+  }
