@@ -3,7 +3,6 @@
     "width": 700,
     "height": 400,
     "title":"Total Number of Death over Total Population in 11 States",
-    "description": "A scatterplot showing body mass and flipper lengths of penguins.",
     "data": {
       "url": "https://raw.githubusercontent.com/HGYYaa/3179HW10/main/data/us_county_sociohealth_data.csv"
     },"params": [
