@@ -110,7 +110,7 @@
           "color": {"value": "black"},
           "opacity": {
             "condition": {
-              "test": "datum['state'] == 'California' || datum['state'] == 'Florida' || datum['state'] == 'Michigan' || datum['state'] == 'New York' || datum['state'] == 'Texas' ||  datum['state'] == 'Washington'",
+              "test": "datum['state'] == 'California' || datum['state'] == 'Michigan' || datum['state'] == 'New York' || datum['state'] == 'Washington'",
               "value": 1
             },
             "value": 0

@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": "Total Population in each County in US",
-  "width": 800,
+  "width": 700,
   "height": 400,
   "data": {
     "url": "https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json",
