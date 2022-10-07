@@ -1,49 +1,63 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": "COVID-19 Death Cases",
-    "width": 800,
-    "height": 400,
-    "data": {
-      "url": "https://raw.githubusercontent.com/HGYYaa/3179HW10/main/js/us-10m.json",
-      "format": {"type": "topojson", "feature": "counties"}
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Total Population in each County in US",
+  "width": 800,
+  "height": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/HGYYaa/3179PRO2/main/js/us-10m.json",
+    "format": {"type": "topojson", "feature": "counties"}
+  },
+  "layer": [
+    {
+      "transform": [
+        {
+          "lookup": "id",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/HGYYaa/3179PRO2/main/data/us_county_sociohealth_data.csv"
+            },
+            "key": "fips",
+            "fields": ["county"]
+          }
+        },
+        {"calculate": "'Data is not available in ' + datum.county", "as": "note"}
+      ],
+      "projection": {"type": "albersUsa"},
+      "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"},
+      "encoding": {"tooltip": {"field": "note"}}
     },
-    "layer": [
-      {
-        "transform": [
-          {
-            "calculate": "'Data is not available in ' + datum.state",
-            "as": "note"
+    {
+      "transform": [
+        {
+          "lookup": "id",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/HGYYaa/3179PRO2/main/data/us_county_sociohealth_data.csv"
+            },
+            "key": "fips",
+            "fields": ["total_population","county"]
           }
-        ],
-        "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"},
-        "encoding": {"tooltip": {"field": "note"}}
-      },
-      {
-        "transform": [
-          {
-            "lookup": "id",
-            "from": {
-              "data": {
-                "url": "https://raw.githubusercontent.com/HGYYaa/3179HW10/main/data/us_county_sociohealth_data.csv"
-              },
-              "key": "fips",
-              "fields": ["num_deaths"]
-            }
-          }
-        ],
-        "projection": {"type": "albersUsa"},
-        "mark": "geoshape",
-        "encoding": {
-          "color": {
-            "field": "num_deaths",
-            "type": "quantitative",
-            "scale": {"type": "log"}
-          },
-          "tooltip": [
-            {"field": "id", "type": "nominal", "title": "State ID"},
-            {"field": "num_deaths", "type": "quantitative", "title": "Death Cases"}
-          ]
         }
+      ],
+      "projection": {"type": "albersUsa"},
+      "mark": "geoshape",
+      "encoding": {
+        "color": {
+          "field": "total_population",
+          "type": "quantitative",
+          "scale": {"type": "linear",
+              "domain": [500, 1000, 5000, 10000, 50000, 100000],
+              "range": ["#F4D166","#F6BC58", "#FB934B", "#EB6E49", "#D64C45", "#B71D3E"]}
+        },
+        "tooltip": [
+          {"field": "county", "type": "nominal", "title": "County"},
+          {
+            "field": "total_population",
+            "type": "quantitative",
+            "title": "Total Population"
+          }
+        ]
       }
-    ]
-  }
+    }
+  ]
+}
